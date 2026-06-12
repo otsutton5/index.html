@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Welcome Home</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .room {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+
+      background-image: url("./components/assets/amica_room.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      overflow: hidden;
+    }
+
+    /* Evil background overlay, hidden at first */
+    .evil-background-overlay {
+      position: absolute;
+      inset: 0;
+
+      background-image: url("./components/assets/evil_end.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      opacity: 0;
+      pointer-events: none;
+
+      z-index: 1;
+
+      transition: opacity 3s ease;
+    }
+
+    .evil-background-overlay.show {
+      opacity: 1;
+    }
+
+    /* ---------------------------------
+       CLICKABLE OBJECTS
+    ---------------------------------- */
+
+    .click-object {
+      position: absolute;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    /* Minion poster on the left wall */
+    .minion-poster {
+      left: 13.5%;
+      top: 24%;
+      width: 6.5%;
+      height: 18%;
+    }
+
+    /* George Harrison poster near the centre-left */
+    .george-poster {
+      left: 36%;
+      top: 22%;
+      width: 8.5%;
+      height: 22%;
+    }
+
+    /* Abbey Road picture on the right wall */
+    .abbey-road-picture {
+      left: 75%;
+      top: 23%;
+      width: 10%;
+      height: 18%;
+    }
+
+    /* Amica close-up image */
+    .amica-close {
+      position: absolute;
+      left: 50%;
+      bottom: -2%;
+      width: 45%;
+      transform: translateX(-50%);
+      z-index: 5;
+
+      transition: opacity 2s ease;
+    }
+
+/* ---------------------------------
+       LAMPS
+    ---------------------------------- */
+
+    .lamp-glow {
+      position: absolute;
+
+      background: radial-gradient(
+        circle,
+        rgba(255, 238, 120, 0.75) 0%,
+        rgba(255, 215, 80, 0.35) 35%,
+        rgba(255, 215, 80, 0.08) 65%,
+        rgba(255, 215, 80, 0) 100%
+      );
+
+      border-radius: 50%;
+
+      opacity: 0;
+      pointer-events: none;
+
+      z-index: 4;
+
+      transition: opacity 0.8s ease;
+    }
+
+    .lamp-glow.on {
+      opacity: 1;
+    }
+
+    /* Lamp 1 glow position */
+    .lamp-glow-one {
+      left: 53%;
+      top: 22%;
+      width: 18%;
+      height: 30%;
+    }
+
+    /* Lamp 1 click area */
+    .lamp-click-one {
+      left: 60%;
+      top: 30%;
+      width: 5%;
+      height: 18%;
+    }
+
+    /* Lamp 2 glow position */
+    .lamp-glow-two {
+      left: 3%;
+      top: 22%;
+      width: 10%;
+      height: 60%;
+    }
+
+    /* Lamp 2 click area */
+    .lamp-click-two {
+      left: 3%;
+      top: 30%;
+      width: 8%;
+      height: 10%;
+    }
+
+    .amica-close img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .amica-close.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Dialogue box */
+    .dialogue-box {
+      position: absolute;
+      left: 50%;
+      bottom: 5%;
+      transform: translateX(-50%);
+
+      width: min(700px, 88%);
+      padding: 24px 30px;
+
+      background-color: rgba(255, 253, 231, 0.95);
+      border: 4px solid #32261d;
+      border-radius: 18px;
+
+      color: #32261d;
+
+      z-index: 10;
+
+      transition: opacity 3s ease;
+    }
+
+    .dialogue-box.fade-away {
+      opacity: 0;
+    }
+
+    .speaker-name {
+      margin: 0 0 10px 0;
+
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .dialogue-text {
+      margin: 0;
+
+      font-size: 22px;
+      line-height: 1.4;
+    }
+
+    .forever-word {
+      color: red;
+      font-weight: bold;
+    }
+
+    /* Final red forever text */
+    .forever-alone {
+      position: absolute;
+      left: 50%;
+      bottom: 9%;
+      transform: translateX(-50%);
+
+      color: red;
+      font-size: 34px;
+      font-weight: bold;
+      letter-spacing: 4px;
+
+      opacity: 0;
+      z-index: 20;
+
+      transition: opacity 3s ease;
+    }
+
+    .forever-alone.show {
+      opacity: 1;
+    }
+
+    /* Webcam container before the photo is taken */
+    .camera-area {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+
+      width: 420px;
+      max-width: 85vw;
+
+      padding: 18px;
+
+      background-color: rgba(255, 253, 231, 0.95);
+      border: 4px solid #32261d;
+      border-radius: 18px;
+
+      text-align: center;
+
+      z-index: 15;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .camera-area.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Webcam after the flash: small face-shaped window */
+    .camera-area.trapped {
+      top: 48%;
+
+      width: 330px;
+      height: 420px;
+      max-width: none;
+
+      padding: 0;
+
+      background-color: transparent;
+      border: none;
+
+      overflow: hidden;
+
+      border-radius: 50% 50% 45% 45%;
+      box-shadow: 0 0 0 4px #32261d;
+
+      z-index: 12;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: cover;
+      object-position: center;
+
+      background-color: black;
+    }
+
+    .photo-button {
+      margin-top: 14px;
+      padding: 14px 22px;
+
+      border: 2px solid #32261d;
+      border-radius: 8px;
+
+      background-color: #32261d;
+      color: white;
+
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 1px;
+
+      cursor: pointer;
+
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .photo-button:hover {
+      transform: scale(1.05);
+      opacity: 0.85;
+    }
+
+    .photo-button.hide {
+      display: none;
+    }
+
+    /* White camera flash */
+    .flash-screen {
+      position: fixed;
+      inset: 0;
+
+      background-color: white;
+
+      opacity: 0;
+      pointer-events: none;
+
+      z-index: 100;
+
+      transition: opacity 2.5s ease;
+    }
+
+    .flash-screen.flash-on {
+      opacity: 1;
+    }
+
+    .flash-screen.flash-off {
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="room" id="room">
+
+    <!-- Evil background overlay, hidden until after the flash -->
+    <div class="evil-background-overlay" id="evilBackgroundOverlay"></div>
+
+    <!-- Invisible clickable object areas -->
+    <button 
+      class="click-object minion-poster" 
+      data-sound="./components/assets/sound_effects/minion_sound.mp3" 
+      aria-label="Minion poster">
+    </button>
+
+    <button 
+      class="click-object george-poster" 
+      data-sound="./components/assets/sound_effects/sweet_lord.mp3" 
+      aria-label="George Harrison poster">
+    </button>
+
+    <button 
+      class="click-object abbey-road-picture" 
+      data-sound="./components/assets/sound_effects/sun.mp3" 
+      aria-label="Abbey Road picture">
+    </button>
+
+    <!-- Lamp 1 glow and click area -->
+    <div class="lamp-glow lamp-glow-one" id="lampGlowOne"></div>
+
+    <button 
+      class="click-object lamp-click-one" 
+      aria-label="Lamp one">
+    </button>
+
+    <!-- Lamp 2 glow and click area -->
+    <div class="lamp-glow lamp-glow-two" id="lampGlowTwo"></div>
+
+    <button 
+      class="click-object lamp-click-two" 
+      aria-label="Lamp two">
+    </button>
+
+    <!-- Amica close-up -->
+    <div class="amica-close" id="amicaClose">
+      <img src="./components/assets/amica_cam.png" alt="Amica close to the viewer">
+    </div>
+
+    <!-- Dialogue box -->
+    <section class="dialogue-box" id="dialogueBox">
+      <p class="speaker-name">AMICA</p>
+
+      <p class="dialogue-text" id="dialogueText">
+        Yay! Before you go searching, can I please take a picture of you?
+      </p>
+    </section>
+
+    <!-- Webcam window -->
+    <section class="camera-area" id="cameraArea">
+      <video id="webcam" autoplay playsinline></video>
+
+      <button class="photo-button" id="photoButton">
+        Sure, take the photo
+      </button>
+    </section>
+
+    <!-- White flash overlay -->
+    <div class="flash-screen" id="flashScreen"></div>
+
+    <!-- Final red word -->
+    <div class="forever-alone" id="foreverText">
+      Forever.
+    </div>
+
+  </main>
+
+  <script>
+    const cameraArea = document.getElementById("cameraArea");
+    const webcam = document.getElementById("webcam");
+    const photoButton = document.getElementById("photoButton");
+
+    const flashScreen = document.getElementById("flashScreen");
+    const dialogueBox = document.getElementById("dialogueBox");
+    const dialogueText = document.getElementById("dialogueText");
+
+    const amicaClose = document.getElementById("amicaClose");
+    const foreverText = document.getElementById("foreverText");
+
+    const evilBackgroundOverlay = document.getElementById("evilBackgroundOverlay");
+
+    let photoTaken = false;
+
+    // ---------------------------------
+    // OBJECT SOUND EFFECTS
+    // ---------------------------------
+
+    const clickableObjects = document.querySelectorAll(".click-object");
+
+    // Stores all sounds so they can pause and resume
+    const sounds = {};
+
+    // Stores which object is currently playing
+    let currentObject = null;
+
+    clickableObjects.forEach(function (object) {
+      const soundPath = object.getAttribute("data-sound");
+
+      // Create one audio file for each object
+      sounds[soundPath] = new Audio(soundPath);
+
+      object.addEventListener("click", function () {
+        const sound = sounds[soundPath];
+
+        if (!soundPath) {
+          console.log("No sound path found for this object.");
+          return;
+        }
+
+        // If the same object is clicked while playing, pause it
+        if (currentObject === object && !sound.paused) {
+          sound.pause();
+          return;
+        }
+
+        // If the same object is clicked while paused, resume it
+        if (currentObject === object && sound.paused) {
+          sound.play();
+          return;
+        }
+
+        // Pause any other sound that is currently playing
+        Object.values(sounds).forEach(function (otherSound) {
+          otherSound.pause();
+        });
+
+        // Play the clicked object's sound from where it last paused
+        currentObject = object;
+
+        sound.play().catch(function (error) {
+          console.log("Sound could not play:", error);
+        });
+      });
+    });
+
+    // ---------------------------------
+    // LAMP LIGHT EFFECTS
+    // ---------------------------------
+
+    const lampClickOne = document.querySelector(".lamp-click-one");
+    const lampGlowOne = document.getElementById("lampGlowOne");
+
+    const lampClickTwo = document.querySelector(".lamp-click-two");
+    const lampGlowTwo = document.getElementById("lampGlowTwo");
+
+    lampClickOne.addEventListener("click", function () {
+      lampGlowOne.classList.toggle("on");
+    });
+
+    lampClickTwo.addEventListener("click", function () {
+      lampGlowTwo.classList.toggle("on");
+    });
+
+    // Starts the webcam
+    async function startCamera() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+          audio: false
+        });
+
+        webcam.srcObject = stream;
+      } catch (error) {
+        dialogueText.textContent = "I can't see you... Please allow camera access so I can take your picture.";
+      }
+    }
+
+    // Show webcam shortly after page loads
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        cameraArea.classList.add("show");
+        startCamera();
+      }, 1500);
+    });
+
+    // Runs the fake photo moment
+    function takePhoto() {
+      if (photoTaken) {
+        return;
+      }
+
+      photoTaken = true;
+
+      // Hide the button
+      photoButton.classList.add("hide");
+
+      // Turn the screen white
+      flashScreen.classList.add("flash-on");
+
+      // Keep the screen white for 5 seconds
+      setTimeout(function () {
+
+        // Slowly fade the white screen away
+        flashScreen.classList.remove("flash-on");
+        flashScreen.classList.add("flash-off");
+
+        // Fade in the evil background overlay
+        evilBackgroundOverlay.classList.add("show");
+
+        // Remove Amica from the screen
+        amicaClose.classList.add("hide");
+
+        // Make the webcam smaller and face-shaped in the centre
+        cameraArea.classList.add("trapped");
+
+        // Hide the first dialogue box while the room returns
+        dialogueBox.classList.add("fade-away");
+
+        // After 3 seconds, Amica speaks again
+        setTimeout(function () {
+          dialogueBox.classList.remove("fade-away");
+
+          dialogueText.innerHTML = 'Welcome home, new friend! We can now be together <span class="forever-word">forever.</span>';
+
+          // Then fade the dialogue box away, leaving only "Forever."
+          setTimeout(function () {
+            dialogueBox.classList.add("fade-away");
+            foreverText.classList.add("show");
+          }, 3500);
+
+        }, 3000);
+
+      }, 5000);
+    }
+
+    // Button click takes the photo
+    photoButton.addEventListener("click", takePhoto);
+
+    // Pressing Enter also takes the photo
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" && !photoTaken) {
+        takePhoto();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

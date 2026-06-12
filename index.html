@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Makes the page resize properly on phones and tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Welcome to My Game</title>
+
+  <style>
+    /* Makes sure padding and borders do not change element sizes */
+    * {
+      box-sizing: border-box;
+    }
+
+    /* Removes the default white space around the webpage */
+    body {
+      margin: 0;
+    }
+
+    /* Creates the full-screen welcome page */
+    .welcome-page {
+      width: 100vw;
+      height: 100vh;
+
+      background-image: url("images/welcome-background.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      overflow: hidden;
+    }
+
+    /* Start button styled like the dialogue box */
+    .start-button {
+      display: inline-block;
+
+      padding: 24px 70px;
+
+      font-family: Arial, sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 4px;
+
+      color: #32261d;
+      text-decoration: none;
+
+      background-color: rgba(255, 253, 231, 0.95);
+      border: 4px solid #32261d;
+      border-radius: 18px;
+
+      box-shadow: 0 8px 0 #32261d;
+
+      animation: flash 3s ease-in-out infinite;
+
+      transition:
+        transform 0.4s ease,
+        background-color 0.4s ease,
+        box-shadow 0.4s ease;
+    }
+
+    /* Makes the button enlarge when the cursor hovers over it */
+    .start-button:hover {
+      transform: scale(1.08);
+      background-color: white;
+      box-shadow: 0 12px 0 #32261d;
+    }
+
+    /* Makes the button press down slightly when clicked */
+    .start-button:active {
+      transform: scale(1.02) translateY(6px);
+      box-shadow: 0 3px 0 #32261d;
+    }
+
+    /* Creates a subtle flashing animation */
+    @keyframes flash {
+      0% {
+        opacity: 0.75;
+      }
+
+      50% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0.75;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="welcome-page">
+
+    <!-- This button sends the user to page1.html -->
+    <a href="page1.html" class="start-button">START</a>
+
+  </main>
+
+</body>
+
+</html>

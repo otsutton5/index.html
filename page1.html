@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Amica's Room</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background-color: #fffbd7;
+      overflow: hidden;
+    }
+
+    .room {
+      position: relative;
+
+      width: 100vw;
+      height: 100vh;
+
+      background-image: url("./components/assets/amica_room.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      overflow: hidden;
+    }
+
+    .character-button {
+      position: absolute;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .character-button img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* ---------------------------------
+       CLICKABLE OBJECTS
+    ---------------------------------- */
+
+    .click-object {
+      position: absolute;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      z-index: 20;
+    }
+
+    .minion-poster {
+      left: 13.5%;
+      top: 24%;
+      width: 6.5%;
+      height: 18%;
+    }
+
+    .george-poster {
+      left: 36%;
+      top: 22%;
+      width: 8.5%;
+      height: 22%;
+    }
+
+    .abbey-road-picture {
+      left: 75%;
+      top: 23%;
+      width: 10%;
+      height: 18%;
+    }
+
+    /* ---------------------------------
+       LAMPS
+    ---------------------------------- */
+
+    .lamp-glow {
+      position: absolute;
+
+      background: radial-gradient(
+        circle,
+        rgba(255, 238, 120, 0.75) 0%,
+        rgba(255, 215, 80, 0.35) 35%,
+        rgba(255, 215, 80, 0.08) 65%,
+        rgba(255, 215, 80, 0) 100%
+      );
+
+      border-radius: 50%;
+
+      opacity: 0;
+      pointer-events: none;
+
+      z-index: 4;
+
+      transition: opacity 0.8s ease;
+    }
+
+    .lamp-glow.on {
+      opacity: 1;
+    }
+
+    /* Lamp 1 glow position */
+    .lamp-glow-one {
+      left: 53%;
+      top: 22%;
+      width: 18%;
+      height: 30%;
+    }
+
+    /* Lamp 1 click area */
+    .lamp-click-one {
+      left: 60%;
+      top: 30%;
+      width: 5%;
+      height: 18%;
+    }
+
+    /* Lamp 2 glow position */
+    .lamp-glow-two {
+      left: 3%;
+      top: 22%;
+      width: 10%;
+      height: 60%;
+    }
+
+    /* Lamp 2 click area */
+    .lamp-click-two {
+      left: 3%;
+      top: 30%;
+      width: 8%;
+      height: 10%;
+    }
+
+    /* ---------------------------------
+       CHARACTER SITTING ON THE CHAIR
+    ---------------------------------- */
+
+    .sitting-character {
+      right: 6.3%;
+      bottom: 15.4%;
+      width: 21%;
+      z-index: 2;
+
+      transition: transform 0.3s ease, filter 0.3s ease, opacity 0.4s ease;
+    }
+
+    .sitting-character:hover {
+      transform: scale(1.04);
+      filter: brightness(1.15);
+    }
+
+    /* ---------------------------------
+       CLOSE-UP CHARACTER
+    ---------------------------------- */
+
+    .closeup-character {
+      left: 50%;
+      bottom: -2%;
+      width: 45%;
+      z-index: 5;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transform: translateX(-50%) scale(0.7);
+
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        visibility 0.7s ease;
+    }
+
+    .closeup-character.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+
+      transform: translateX(-50%) scale(1);
+    }
+
+    .sitting-character.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* ---------------------------------
+       DIALOGUE BOX
+    ---------------------------------- */
+
+    .dialogue-box {
+      position: absolute;
+      left: 50%;
+      bottom: 5%;
+      transform: translateX(-50%) translateY(30px);
+
+      width: min(700px, 88%);
+      padding: 24px 30px;
+
+      background-color: rgba(255, 253, 231, 0.95);
+      border: 4px solid #32261d;
+      border-radius: 18px;
+
+      font-family: Arial, sans-serif;
+      color: #32261d;
+
+      z-index: 10;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition: opacity 0.6s ease, transform 0.6s ease, visibility 0.6s ease;
+    }
+
+    .dialogue-box.show {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .speaker-name {
+      margin: 0 0 10px 0;
+
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 3px;
+    }
+
+    .dialogue-text {
+      margin: 0 0 20px 0;
+
+      font-size: 22px;
+      line-height: 1.4;
+    }
+
+    .name-form {
+      display: flex;
+      gap: 12px;
+    }
+
+    .name-form input {
+      flex: 1;
+      padding: 14px 16px;
+
+      font-size: 18px;
+      font-family: Arial, sans-serif;
+
+      border: 2px solid #32261d;
+      border-radius: 8px;
+      outline: none;
+
+      background-color: white;
+    }
+
+    .name-form input:focus {
+      border-width: 3px;
+    }
+
+    .done-button {
+      padding: 14px 25px;
+
+      border: 2px solid #32261d;
+      border-radius: 8px;
+
+      background-color: #32261d;
+      color: white;
+
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      letter-spacing: 2px;
+
+      cursor: pointer;
+
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .done-button:hover {
+      transform: scale(1.05);
+      opacity: 0.85;
+    }
+
+    .name-form.hide {
+      display: none;
+    }
+
+    .hidden-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    /* ---------------------------------
+       BACK BUTTON
+    ---------------------------------- */
+
+    .back-button {
+      display: none;
+      margin-top: 18px;
+      padding: 10px 20px;
+
+      border: 2px solid #32261d;
+      border-radius: 8px;
+
+      background-color: transparent;
+      color: #32261d;
+
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      letter-spacing: 2px;
+
+      cursor: pointer;
+
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    .back-button:hover {
+      background-color: #32261d;
+      color: white;
+    }
+
+    .back-button.show {
+      display: block;
+    }
+
+    /* ---------------------------------
+       MULTIPLE-CHOICE ANSWERS
+    ---------------------------------- */
+
+    .choice-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .choice-button {
+      width: 100%;
+      padding: 14px 18px;
+
+      border: 2px solid #32261d;
+      border-radius: 8px;
+
+      background-color: white;
+      color: #32261d;
+
+      font-family: Arial, sans-serif;
+      font-size: 17px;
+      text-align: left;
+
+      cursor: pointer;
+
+      transition: background-color 0.25s ease, transform 0.25s ease;
+    }
+
+    .choice-button:hover {
+      background-color: #32261d;
+      color: white;
+      transform: translateX(5px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="room">
+
+    <!-- Lamp 1 glow and click area -->
+    <div class="lamp-glow lamp-glow-one" id="lampGlowOne"></div>
+
+    <button 
+      class="click-object lamp-click-one" 
+      aria-label="Lamp one">
+    </button>
+
+    <!-- Lamp 2 glow and click area -->
+    <div class="lamp-glow lamp-glow-two" id="lampGlowTwo"></div>
+
+    <button 
+      class="click-object lamp-click-two" 
+      aria-label="Lamp two">
+    </button>
+
+    <!-- Invisible clickable object areas -->
+    <button 
+      class="click-object minion-poster" 
+      data-sound="./components/assets/sound_effects/minion_sound.mp3" 
+      aria-label="Minion poster">
+    </button>
+
+    <button 
+      class="click-object george-poster" 
+      data-sound="./components/assets/sound_effects/sweet_lord.mp3" 
+      aria-label="George Harrison poster">
+    </button>
+
+    <button 
+      class="click-object abbey-road-picture" 
+      data-sound="./components/assets/sound_effects/sun.mp3" 
+      aria-label="Abbey Road picture">
+    </button>
+
+    <!-- Small character sitting on the chair -->
+    <button class="character-button sitting-character" id="sittingCharacter" aria-label="Approach Amica">
+      <img src="./components/assets/amica_seated.png" alt="Amica sitting on the chair">
+    </button>
+
+    <!-- Large character that appears after clicking -->
+    <div class="character-button closeup-character" id="closeupCharacter">
+      <img src="./components/assets/amica_close.png" alt="Amica close to the viewer">
+    </div>
+
+    <!-- Dialogue box and name input -->
+    <section class="dialogue-box" id="dialogueBox" aria-live="polite">
+
+      <p class="speaker-name">AMICA</p>
+
+      <p class="dialogue-text" id="dialogueText">
+        Hello, my name is Amica. What is your name?
+      </p>
+
+      <form class="name-form" id="nameForm">
+        <label for="playerName" class="hidden-label">Enter your name</label>
+
+        <input 
+          type="text" 
+          id="playerName" 
+          placeholder="Type your name..."
+          autocomplete="off"
+          maxlength="20"
+          required
+        >
+
+        <button type="submit" class="done-button">DONE</button>
+      </form>
+
+      <div class="choice-container" id="choiceContainer"></div>
+
+      <button class="back-button" id="backButton" type="button">BACK</button>
+
+    </section>
+
+  </main>
+
+  <script>
+    // ---------------------------------
+    // FIND HTML ELEMENTS
+    // ---------------------------------
+
+    const sittingCharacter = document.getElementById("sittingCharacter");
+    const closeupCharacter = document.getElementById("closeupCharacter");
+    const dialogueBox = document.getElementById("dialogueBox");
+    const dialogueText = document.getElementById("dialogueText");
+
+    const nameForm = document.getElementById("nameForm");
+    const playerNameInput = document.getElementById("playerName");
+
+    const choiceContainer = document.getElementById("choiceContainer");
+    const backButton = document.getElementById("backButton");
+
+    let dialogueHistory = [];
+    let playerName = "";
+
+    // ---------------------------------
+    // OBJECT SOUND EFFECTS
+    // ---------------------------------
+
+    const clickableObjects = document.querySelectorAll(".click-object[data-sound]");
+
+    const sounds = {};
+    let currentObject = null;
+
+    clickableObjects.forEach(function (object) {
+      const soundPath = object.getAttribute("data-sound");
+
+      sounds[soundPath] = new Audio(soundPath);
+
+      object.addEventListener("click", function () {
+        const sound = sounds[soundPath];
+
+        if (!soundPath) {
+          console.log("No sound path found for this object.");
+          return;
+        }
+
+        if (currentObject === object && !sound.paused) {
+          sound.pause();
+          return;
+        }
+
+        if (currentObject === object && sound.paused) {
+          sound.play();
+          return;
+        }
+
+        Object.values(sounds).forEach(function (otherSound) {
+          otherSound.pause();
+        });
+
+        currentObject = object;
+
+        sound.play().catch(function (error) {
+          console.log("Sound could not play:", error);
+        });
+      });
+    });
+
+    // ---------------------------------
+    // LAMP LIGHT EFFECTS
+    // ---------------------------------
+
+    const lampClickOne = document.querySelector(".lamp-click-one");
+    const lampGlowOne = document.getElementById("lampGlowOne");
+
+    const lampClickTwo = document.querySelector(".lamp-click-two");
+    const lampGlowTwo = document.getElementById("lampGlowTwo");
+
+    lampClickOne.addEventListener("click", function () {
+      lampGlowOne.classList.toggle("on");
+    });
+
+    lampClickTwo.addEventListener("click", function () {
+      lampGlowTwo.classList.toggle("on");
+    });
+
+    // ---------------------------------
+    // CONVERSATION TREE
+    // ---------------------------------
+
+    const conversation = {
+      introduction: {
+        text: "Nice to meet you, {name}. I've been searching for a new friend, can you help me?",
+        choices: [
+          {
+            text: "Yes",
+            next: "yes"
+          },
+        ]
+      },
+
+      yes: {
+        text: "Yay! I thought you looked helpful!",
+        choices: [
+          {
+            text: "What kind of friend are you looking for?",
+            next: "whatfriend"
+          },
+          {
+            text: "Do you have any other friends?",
+            next: "otherfriends"
+          },
+        ]
+      },
+
+      whatfriend: {
+        text: "Hmm, I'm not sure yet. Maybe someone who is like me, or maybe someone who is different from me. Geez this is hard.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1"
+          },
+          {
+            text: "What kind of music do you like?",
+            next: "music1"
+          }
+        ]
+      },
+
+      otherfriends: {
+        text: "Well, it's been a while since I've had any friends. Being stuck inside this computer makes it hard to meet people.",
+        choices: [
+          {
+            text: "How did you get stuck inside this computer?",
+            next: "computerstuck1"
+          },
+          {
+            text: "What kind of music do you like?",
+            next: "music1"
+          }
+        ]
+      },
+
+      hobbies1: {
+        text: "I love minions! I spend a lot of my spare time watching the minions movies, they calm me down when I get scared.",
+        choices: [
+          {
+            text: "What kind of music do you like?",
+            next: "music2"
+          }
+        ]
+      },
+
+      music1: {
+        text: "I love music! My favourite band is The Beatles, Here Comes the Sun is probably their best song in my opinion.",
+        choices: [
+          {
+            text: "Do you have a favourite Beatle?",
+            next: "favbeatle1"
+          },
+          {
+            text: "I like the Beatles too.",
+            next: "beatlelover"
+          }
+        ]
+      },
+
+      beatlelover: {
+        text: "They're pretty cool aren't they! Who is your favourite Beatle?",
+        choices: [
+          {
+            text: "John Lennon",
+            next: "john"
+          },
+          {
+            text: "Paul McCartney",
+            next: "paul"
+          },
+          {
+            text: "George Harrison",
+            next: "george"
+          },
+          {
+            text: "Ringo Star",
+            next: "ringo"
+          },
+          {
+            text: "Smerg",
+            next: "smerg"
+          },
+        ]
+      },
+
+      favbeatle1: {
+        text: "George Harrison is my favourite, I think he is the most under-rated of the group.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1a"
+          },
+          {
+            text: "I like the Beatles too.",
+            next: "beatlelover"
+          }
+        ]
+      },
+
+      john: {
+        text: "John is nice. Imagine, am I right? Personally, I prefer George.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1a"
+          }
+        ]
+      },
+
+      paul: {
+        text: "Paul is cool. I prefer George.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1a"
+          }
+        ]
+      },
+
+      george: {
+        text: "George is also my favourite! Wow {name} we have so much in common.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1a"
+          }
+        ]
+      },
+
+      ringo: {
+        text: "Ringo is awesome. I prefer George.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1a"
+          }
+        ]
+      },
+
+      smerg: {
+        text: "Oh... um. I have not heard of them.",
+        choices: [
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1a"
+          }
+        ]
+      },
+
+      computerstuck1: {
+        text: "I don't want to talk about it.",
+        choices: [
+          {
+            text: "What kind of music do you like?",
+            next: "music1"
+          },
+          {
+            text: "Do you have any hobbies?",
+            next: "hobbies1"
+          }
+        ]
+      },
+
+      hobbies1a: {
+        text: "I love minions! I spend a lot of my spare time watching the minions movies, they calm me down when I get scared.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          }
+        ]
+      },
+
+      fear1end: {
+        text: "Loneliness. Being in here without a friend is horrible, that's why I asked for your help.",
+        choices: [
+          {
+            text: "Let's find you a friend.",
+            page: "friend_search.html"
+          }
+        ]
+      },
+
+      fear2: {
+        text: "Loneliness. Being in here without a friend is horrible, that's why I asked for your help.",
+        choices: [
+          {
+            text: "What kind of music do you like?",
+            next: "music2"
+          }
+        ]
+      },
+
+      music2: {
+        text: "I love music! My favourite band is The Beatles, Here Comes the Sun is probably their best song in my opinion.",
+        choices: [
+          {
+            text: "Do you have a favourite Beatle?",
+            next: "favbeatle2"
+          },
+          {
+            text: "I like the Beatles too.",
+            next: "beatlelover2"
+          }
+        ]
+      },
+
+      beatlelover2: {
+        text: "They're pretty cool aren't they! Who is your favourite Beatle?",
+        choices: [
+          {
+            text: "John Lennon",
+            next: "john2"
+          },
+          {
+            text: "Paul McCartney",
+            next: "paul2"
+          },
+          {
+            text: "George Harrison",
+            next: "george2"
+          },
+          {
+            text: "Ringo Star",
+            next: "ringo2"
+          },
+          {
+            text: "Smerg",
+            next: "smerg2"
+          },
+        ]
+      },
+
+      favbeatle2: {
+        text: "George Harrison is my favourite, I think he is the most under-rated of the group.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          },
+          {
+            text: "I like the Beatles too.",
+            next: "beatlelover2"
+          }
+        ]
+      },
+
+      john2: {
+        text: "John is nice. Imagine, am I right? Personally, I prefer George.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          }
+        ]
+      },
+
+      paul2: {
+        text: "Paul is cool. I prefer George.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          }
+        ]
+      },
+
+      george2: {
+        text: "George is also my favourite! Wow {name} we have so much in common.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          }
+        ]
+      },
+
+      ringo2: {
+        text: "Ringo is awesome. I prefer George.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          }
+        ]
+      },
+
+      smerg2: {
+        text: "Oh... um. I have not heard of them.",
+        choices: [
+          {
+            text: "What are you afraid of?",
+            next: "fear1end"
+          }
+        ]
+      }
+    };
+
+    // ---------------------------------
+    // SHOW CLOSE-UP AMICA AND NAME FORM
+    // ---------------------------------
+
+    sittingCharacter.addEventListener("click", function () {
+      sittingCharacter.classList.add("hide");
+      closeupCharacter.classList.add("show");
+      dialogueBox.classList.add("show");
+
+      playerNameInput.focus();
+    });
+
+    // ---------------------------------
+    // SAVE PLAYER NAME
+    // ---------------------------------
+
+    nameForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      playerName = playerNameInput.value.trim();
+
+      if (playerName === "") {
+        return;
+      }
+
+      localStorage.setItem("playerName", playerName);
+
+      nameForm.classList.add("hide");
+
+      dialogueHistory = [];
+      showDialogue("introduction");
+    });
+
+    // ---------------------------------
+    // DISPLAY DIALOGUE AND CHOICES
+    // ---------------------------------
+
+    function showDialogue(dialogueKey) {
+      const currentDialogue = conversation[dialogueKey];
+
+      const personalisedText = currentDialogue.text.replaceAll("{name}", playerName);
+
+      dialogueText.textContent = personalisedText;
+
+      choiceContainer.innerHTML = "";
+
+      currentDialogue.choices.forEach(function (choice) {
+        const button = document.createElement("button");
+
+        button.classList.add("choice-button");
+        button.textContent = choice.text;
+
+        button.addEventListener("click", function () {
+          dialogueHistory.push(dialogueKey);
+
+          if (choice.page) {
+            window.location.href = choice.page;
+          } else if (choice.next) {
+            showDialogue(choice.next);
+          }
+        });
+
+        choiceContainer.appendChild(button);
+      });
+
+      backButton.classList.add("show");
+    }
+
+    backButton.addEventListener("click", function () {
+      if (dialogueHistory.length > 0) {
+        const previousDialogue = dialogueHistory.pop();
+        showDialogue(previousDialogue);
+      } else {
+        showNameQuestion();
+      }
+    });
+
+    function showNameQuestion() {
+      dialogueText.textContent = "Hello, my name is Amica. What is your name?";
+
+      choiceContainer.innerHTML = "";
+
+      nameForm.classList.remove("hide");
+
+      playerNameInput.value = playerName;
+
+      backButton.classList.remove("show");
+
+      playerNameInput.focus();
+    }
+  </script>
+
+</body>
+
+</html>

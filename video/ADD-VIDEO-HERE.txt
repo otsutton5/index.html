@@ -1,0 +1,13 @@
+Add your background video to this folder and name it:
+
+hero-background.mp4
+
+Recommended export settings:
+- Format: H.264 MP4
+- Resolution: 1920 × 1080
+- Frame rate: 24, 25 or 30 fps
+- No audio needed
+- Keep it around 5–15 seconds and loopable
+- Aim for under 10 MB where possible
+
+The video must remain muted for autoplay to work reliably.

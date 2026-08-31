@@ -1,0 +1,1133 @@
+/* =========================================
+   1. VARIABLES
+========================================= */
+
+:root {
+  --background: #f2f0ea;
+  --foreground: #111111;
+  --muted: #6f6d66;
+  --line: rgba(17, 17, 17, 0.18);
+  --header-height: 88px;
+}
+
+
+/* =========================================
+   2. RESET
+========================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  cursor: crosshair;
+}
+
+a,
+button {
+  cursor: crosshair;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+
+/* =========================================
+   3. GLOBAL TYPOGRAPHY
+========================================= */
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  font-family: "aktiv-grotesk", Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+}
+
+p {
+  line-height: 1.45;
+}
+
+
+/* =========================================
+   4. HEADER
+========================================= */
+
+.site-header {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: var(--header-height);
+  padding: 22px 28px;
+
+  mix-blend-mode: difference;
+  color: #ffffff;
+
+  pointer-events: none;
+}
+
+.site-header a {
+  pointer-events: auto;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  font-family: "aktiv-grotesk", Arial, Helvetica, sans-serif;
+  font-size: clamp(38px, 5.6vw, 88px);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+
+  will-change: opacity;
+}
+
+.site-nav {
+  display: flex;
+  gap: 24px;
+
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.site-nav a {
+  position: relative;
+}
+
+.site-nav a::after {
+  content: "";
+
+  position: absolute;
+  right: 0;
+  bottom: -4px;
+  left: 0;
+
+  height: 1px;
+
+  background: currentColor;
+
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 250ms ease;
+}
+
+.site-nav a:hover::after,
+.site-nav a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+/* =========================================
+   5. HERO
+========================================= */
+
+.hero {
+  position: relative;
+
+  display: flex;
+  align-items: flex-end;
+
+  min-height: 100svh;
+  padding: 140px 28px 34px;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-copy {
+  width: min(1120px, 92vw);
+}
+
+.eyebrow,
+.section-label {
+  margin-bottom: 22px;
+
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  max-width: 1100px;
+  margin-bottom: 30px;
+
+  font-size: clamp(54px, 8.7vw, 146px);
+  line-height: 0.9;
+}
+
+.hero-intro {
+  max-width: 540px;
+  margin-bottom: 0;
+  margin-left: auto;
+
+  font-size: clamp(16px, 1.5vw, 23px);
+}
+
+.scroll-note {
+  position: absolute;
+  right: 28px;
+  bottom: 34px;
+
+  margin: 0;
+
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================
+   6. FLOATING GALLERY
+========================================= */
+
+.gallery {
+  position: relative;
+  min-height: 2300px;
+  overflow: hidden;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.gallery-drawing {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: visible;
+  pointer-events: none;
+}
+
+.gallery-drawing-line {
+  fill: none;
+  stroke: rgba(17, 17, 17, 0.28);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.gallery-background-text {
+  position: sticky;
+  z-index: 0;
+  top: 44vh;
+
+  width: 100%;
+  padding: 0 20px;
+
+  color: rgba(255, 255, 255, 0.10);
+
+  font-size: clamp(72px, 16vw, 240px);
+  line-height: 0.8;
+  letter-spacing: -0.07em;
+  text-align: center;
+  white-space: nowrap;
+
+  pointer-events: none;
+}
+
+.project {
+  position: absolute;
+  touch-action: manipulation;
+  z-index: 2;
+
+  display: block;
+
+  transition:
+    z-index 0s,
+    filter 400ms ease;
+  will-change: transform;
+}
+
+.project figure {
+  margin: 0;
+}
+
+.project img,
+.project video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  background: #d9d6cd;
+  box-shadow: 0 18px 42px rgba(17, 17, 17, 0.2);
+
+  transition:
+    transform 650ms cubic-bezier(0.2, 0.75, 0.25, 1),
+    filter 500ms ease,
+    box-shadow 500ms ease;
+}
+
+.project figcaption {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 3px 10px;
+
+  padding-top: 9px;
+
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+.project-number {
+  grid-row: 1 / 3;
+  color: var(--muted);
+}
+
+.project-title {
+  font-weight: 700;
+}
+
+.project-meta {
+  color: var(--muted);
+}
+
+.project:hover,
+.project:focus-visible {
+  z-index: 20;
+}
+
+.project:hover img,
+.project:hover video,
+.project:focus-visible img,
+.project:focus-visible video {
+  transform: scale(1.035);
+  box-shadow: 0 24px 56px rgba(17, 17, 17, 0.28);
+}
+
+.project:hover figcaption,
+.project:focus-visible figcaption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery:has(.project:hover) .project:not(:hover) img,
+.gallery:has(.project:hover) .project:not(:hover) video {
+  filter: grayscale(0.85) contrast(0.88) opacity(0.62);
+}
+
+
+/* Individual artwork positions */
+
+.project--one {
+  top: 160px;
+  left: 7vw;
+
+  width: clamp(280px, 35vw, 560px);
+}
+
+.project--one img,
+.project--one video {
+  aspect-ratio: 4 / 3;
+}
+
+.project--two {
+  top: 430px;
+  right: 6vw;
+
+  width: clamp(230px, 25vw, 390px);
+}
+
+.project--two img {
+  aspect-ratio: 3508 / 4961;
+  object-fit: contain;
+}
+
+.project--three {
+  top: 860px;
+  left: 29vw;
+
+  width: clamp(270px, 31vw, 490px);
+}
+
+.project--three img {
+  aspect-ratio: 1 / 1;
+}
+
+.project--four {
+  top: 1230px;
+  left: 5vw;
+
+  width: clamp(250px, 28vw, 440px);
+}
+
+.project--four img {
+  aspect-ratio: 4 / 5;
+}
+
+.project--six {
+  top: 1650px;
+  left: 38vw;
+
+  width: clamp(220px, 27vw, 430px);
+}
+
+.project--six img {
+  aspect-ratio: 3 / 4;
+}
+
+
+/* =========================================
+   7. ABOUT
+========================================= */
+
+.about {
+  padding: 100px 28px 130px;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.2fr)
+    minmax(220px, 0.48fr)
+    minmax(240px, 0.42fr);
+  gap: clamp(28px, 5vw, 84px);
+  align-items: start;
+}
+
+.about-heading {
+  min-width: 0;
+}
+
+.about h2 {
+  max-width: 900px;
+  margin-bottom: 0;
+
+  font-size: clamp(44px, 5.4vw, 88px);
+  line-height: 0.94;
+}
+
+.about-portrait {
+  margin: 0;
+}
+
+.about-portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: #d9d6cd;
+}
+
+.about-portrait figcaption {
+  margin-top: 9px;
+  color: var(--muted);
+
+  font-size: 10px;
+  line-height: 1.3;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.about-copy {
+  padding-top: 8px;
+}
+
+.about-copy p {
+  font-size: 16px;
+}
+
+.text-link {
+  display: inline-block;
+  margin-top: 20px;
+
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 4px;
+}
+
+
+/* =========================================
+   8. FOOTER
+========================================= */
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+
+  padding: 22px 28px;
+
+  border-top: 1px solid var(--line);
+
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.site-footer div {
+  display: flex;
+  gap: 24px;
+}
+
+
+/* =========================================
+   10. ACCESSIBILITY
+========================================= */
+
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================
+   11. TABLET
+========================================= */
+
+@media (max-width: 900px) {
+  .hero {
+    padding-top: 120px;
+  }
+
+  .hero-intro {
+    margin-left: 0;
+  }
+
+  .scroll-note {
+    display: none;
+  }
+
+  .gallery {
+    min-height: 2000px;
+  }
+
+  .project--one {
+    left: 5vw;
+  }
+
+  .project--two {
+    right: 4vw;
+  }
+
+  .project--three {
+    left: 24vw;
+  }
+
+  .project--four {
+    left: 4vw;
+  }
+
+  .project--six {
+    left: 32vw;
+  }
+
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 0.48fr);
+    gap: 46px 34px;
+  }
+
+  .about-heading {
+    grid-column: 1 / -1;
+  }
+
+  .about-copy {
+    max-width: 520px;
+    margin-left: 0;
+  }
+}
+
+
+/* =========================================
+   12. MOBILE
+========================================= */
+
+@media (max-width: 680px) {
+  :root {
+    --header-height: 72px;
+  }
+
+  .site-header {
+    flex-direction: column;
+    gap: 14px;
+    padding: 17px 16px;
+  }
+
+  .brand {
+    font-size: clamp(30px, 9vw, 48px);
+  }
+
+  .site-nav {
+    gap: 12px;
+  }
+
+  .site-nav a:first-child {
+    display: none;
+  }
+
+  .hero {
+    min-height: 92svh;
+    padding: 110px 16px 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(47px, 15vw, 82px);
+  }
+
+  .hero-intro {
+    font-size: 16px;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 72px;
+
+    min-height: 0;
+    padding: 90px 16px;
+  }
+
+  .gallery-background-text {
+    display: none;
+  }
+
+  .project {
+    position: relative;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+
+    width: 100%;
+  }
+
+  .project:nth-of-type(even) {
+    width: 78%;
+    margin-left: auto;
+  }
+
+  .project:nth-of-type(odd) {
+    width: 88%;
+  }
+
+  .project figcaption {
+    opacity: 1;
+    transform: none;
+  }
+
+  .project img,
+  .project video {
+    max-height: none;
+  }
+
+  .about {
+    padding: 80px 16px 100px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 38px;
+  }
+
+  .about-heading {
+    grid-column: auto;
+  }
+
+  .about h2 {
+    font-size: clamp(42px, 13vw, 68px);
+  }
+
+  .about-portrait {
+    width: 82%;
+    margin-left: auto;
+  }
+
+  .about-copy {
+    max-width: none;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    padding: 20px 16px;
+  }
+
+  .site-footer div {
+    flex-wrap: wrap;
+  }
+}
+
+
+/* =========================================
+   13. PLACEHOLDER IMAGE FALLBACK
+========================================= */
+
+.project img:not([src]),
+.project img[src=""] {
+  min-height: 320px;
+  background:
+    linear-gradient(135deg, #1a1a1a 0%, #777 50%, #ece8df 100%);
+}
+
+
+/* =========================================
+   PROJECT POP-UP WINDOW
+========================================= */
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.project-modal {
+  width: min(1180px, calc(100vw - 48px));
+  max-width: none;
+  max-height: calc(100dvh - 48px);
+  margin: auto;
+  padding: 0;
+
+  border: 1px solid var(--foreground);
+  border-radius: 0;
+  background: var(--background);
+  color: var(--foreground);
+
+  overflow: hidden;
+}
+
+.project-modal::backdrop {
+  background: rgba(17, 17, 17, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.modal-panel {
+  max-height: calc(100dvh - 50px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-header {
+  position: sticky;
+  z-index: 4;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  min-height: 64px;
+  padding: 16px 20px;
+
+  border-bottom: 1px solid var(--line);
+  background: var(--background);
+}
+
+.modal-count,
+.modal-meta {
+  margin: 0;
+
+  color: var(--muted);
+
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.modal-close {
+  min-width: 72px;
+  min-height: 40px;
+  padding: 8px 0 8px 16px;
+
+  border: 0;
+  background: transparent;
+  color: inherit;
+
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: right;
+
+  cursor: pointer;
+}
+
+.modal-content {
+  padding: clamp(22px, 4vw, 56px);
+}
+
+.modal-introduction {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1.2fr) minmax(260px, 0.55fr);
+  gap: clamp(22px, 4vw, 64px);
+  align-items: start;
+
+  margin-bottom: clamp(48px, 8vw, 110px);
+}
+
+.modal-introduction h2 {
+  margin: 0;
+
+  font-size: clamp(52px, 7vw, 112px);
+  line-height: 0.86;
+}
+
+.modal-description {
+  margin: 0;
+  align-self: end;
+
+  font-size: clamp(16px, 1.4vw, 20px);
+}
+
+.modal-images {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.modal-images figure {
+  grid-column: span 2;
+  margin: 0;
+  min-width: 0;
+}
+
+.modal-images .modal-media--video {
+  grid-column: span 3;
+}
+
+.modal-images .modal-media--half {
+  grid-column: span 3;
+}
+
+.modal-images .modal-media--two-thirds {
+  grid-column: span 4;
+}
+
+.modal-images .modal-media--wide {
+  grid-column: 1 / -1;
+}
+
+.modal-images img,
+.modal-images video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  background: #d9d6cd;
+}
+
+
+/* Mobile pop-up */
+
+@media (max-width: 680px) {
+  .project-modal {
+    width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+
+    border: 0;
+  }
+
+  .modal-panel {
+    max-height: 100dvh;
+  }
+
+  .modal-header {
+    min-height: 58px;
+    padding:
+      max(12px, env(safe-area-inset-top))
+      16px
+      12px;
+  }
+
+  .modal-close {
+    min-width: 80px;
+    min-height: 44px;
+  }
+
+  .modal-content {
+    padding:
+      28px
+      16px
+      max(40px, env(safe-area-inset-bottom));
+  }
+
+  .modal-introduction {
+    grid-template-columns: 1fr;
+    gap: 18px;
+
+    margin-bottom: 48px;
+  }
+
+  .modal-introduction h2 {
+    font-size: clamp(54px, 18vw, 86px);
+  }
+
+  .modal-description {
+    max-width: 34rem;
+  }
+
+  .modal-images {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .modal-images figure,
+  .modal-images .modal-media--video,
+  .modal-images .modal-media--half,
+  .modal-images .modal-media--two-thirds,
+  .modal-images .modal-media--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+
+/* =========================================
+   HERO BACKGROUND VIDEO
+========================================= */
+
+.hero--video {
+  isolation: isolate;
+  overflow: hidden;
+  background: #111111;
+  color: #ffffff;
+}
+
+.hero-video {
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-video-overlay {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.18) 0%,
+      rgba(0, 0, 0, 0.08) 35%,
+      rgba(0, 0, 0, 0.54) 100%
+    );
+  pointer-events: none;
+}
+
+.hero--video .hero-copy,
+.hero--video .scroll-note {
+  position: relative;
+  z-index: 1;
+}
+
+.hero--video .eyebrow,
+.hero--video .hero-intro,
+.hero--video .scroll-note {
+  text-shadow: 0 1px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* Fallback when no video is available */
+.hero-video:not(:playing) {
+  background: #111111;
+}
+
+/* Mobile optimisation */
+@media (max-width: 680px) {
+  .hero-video {
+    object-position: center center;
+  }
+
+  .hero-video-overlay {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.22) 0%,
+        rgba(0, 0, 0, 0.16) 35%,
+        rgba(0, 0, 0, 0.68) 100%
+      );
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video {
+    display: none;
+  }
+
+  .hero--video {
+    background:
+      #111111
+      url("images/hero-video-poster.svg")
+      center / cover
+      no-repeat;
+  }
+}
+
+
+/* =========================================
+   OPENING FADE SEQUENCE
+========================================= */
+
+/*
+  Sequence:
+  1. Black screen
+  2. Video fades in
+  3. Hero text and navigation fade in
+*/
+
+.intro-curtain {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+
+  background: #000000;
+
+  opacity: 1;
+  pointer-events: none;
+
+  transition: opacity 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-video-visible .intro-curtain {
+  opacity: 0;
+}
+
+.is-intro-complete .intro-curtain {
+  visibility: hidden;
+}
+
+/* Hide the video beneath the opening black layer at first. */
+.is-loading .hero-video {
+  opacity: 0;
+}
+
+.hero-video {
+  opacity: 0;
+  transition: opacity 1300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-video-visible .hero-video {
+  opacity: 1;
+}
+
+/* Hero content waits until after the video starts appearing. */
+.is-loading .site-header,
+.is-loading .hero-copy,
+.is-loading .scroll-note {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.site-header,
+.hero-copy,
+.scroll-note {
+  transition:
+    opacity 900ms ease,
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.is-text-visible .site-header,
+.is-text-visible .hero-copy,
+.is-text-visible .scroll-note {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Prevent a flash of later content before the intro begins. */
+.is-loading .gallery,
+.is-loading .about,
+.is-loading .site-footer {
+  opacity: 0;
+}
+
+.gallery,
+.about,
+.site-footer {
+  transition: opacity 800ms ease;
+}
+
+.is-intro-complete .gallery,
+.is-intro-complete .about,
+.is-intro-complete .site-footer {
+  opacity: 1;
+}
+
+/* Reduced motion: reveal everything quickly without staged animation. */
+@media (prefers-reduced-motion: reduce) {
+  .intro-curtain {
+    display: none;
+  }
+
+  .hero-video,
+  .site-header,
+  .hero-copy,
+  .scroll-note,
+  .gallery,
+  .about,
+  .site-footer {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

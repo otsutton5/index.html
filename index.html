@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="is-loading">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Oscar Sutton — Graphic Designer</title>
+
+  <meta
+    name="description"
+    content="Experimental graphic design portfolio by Oscar Sutton."
+  />
+
+  <link rel="stylesheet" href="https://use.typekit.net/hjt7zbr.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <div class="intro-curtain" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Return to top">
+      <span>OSCAR SUTTON</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#gallery">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:oscarsutton05@gmail.com">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero hero--video" aria-labelledby="hero-title">
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="images/hero-video-poster.svg"
+        aria-hidden="true"
+      >
+        <source src="video/website_bg.mp4" type="video/mp4" />
+      </video>
+
+      <div class="hero-video-overlay" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">Selected work — 2025–2026</p>
+
+        <h1 id="hero-title">
+          A floating selection of visual outcomes
+        </h1>
+
+        <p class="hero-intro">
+          Melbourne/Naarm-based graduate graphic designer
+        </p>
+      </div>
+
+      <p class="scroll-note" aria-hidden="true">
+        Scroll to explore ↓
+      </p>
+    </section>
+
+    <section
+      class="gallery"
+      id="gallery"
+      aria-label="Selected graphic design projects"
+    >
+      <svg
+        class="gallery-drawing"
+        viewBox="0 0 1000 2300"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <path class="gallery-drawing-line" />
+      </svg>
+
+      <div class="gallery-background-text" aria-hidden="true">
+        SELECTED WORK
+      </div>
+
+      <a
+        class="project project--one"
+        href="#project-modal"
+        data-project="save-the-sharks"
+        data-speed="0.45"
+        aria-label="View Save The Sharks project"
+      >
+        <figure>
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-hidden="true"
+          >
+            <source src="video/3D_Shark.mp4" type="video/mp4" />
+          </video>
+
+          <figcaption>
+            <span class="project-number">01</span>
+            <span class="project-title">Save The Sharks</span>
+            <span class="project-meta">Start-up events company / 2026</span>
+          </figcaption>
+        </figure>
+      </a>
+
+      <a
+        class="project project--two"
+        href="#project-modal"
+        data-project="extra-credits"
+        data-speed="-0.25"
+        aria-label="View The Canvas Road project"
+      >
+        <figure>
+          <img src="images/TCR1.jpg" alt="The Canvas Road poster design project" />
+          <figcaption>
+            <span class="project-number">02</span>
+            <span class="project-title">The Canvas Road</span>
+            <span class="project-meta">Poster / Art Direction / 2026</span>
+          </figcaption>
+        </figure>
+      </a>
+
+      <a
+        class="project project--three"
+        href="#project-modal"
+        data-project="amicas-room"
+        data-speed="0.7"
+        aria-label="View Proposed Plage Type Specimen project"
+      >
+        <figure>
+          <img src="images/P1.jpg" alt="Proposed Plage type specimen whisky label" />
+          <figcaption>
+            <span class="project-number">03</span>
+            <span class="project-title">Proposed ‘Plage’ Type Specimen</span>
+            <span class="project-meta">Whisky Label / 2025</span>
+          </figcaption>
+        </figure>
+      </a>
+
+      <a
+        class="project project--four"
+        href="#project-modal"
+        data-project="m87"
+        data-speed="-0.5"
+        aria-label="View Proposed Lionel’s Cafe Rebrand project"
+      >
+        <figure>
+          <img src="images/Lionel1.jpg" alt="Proposed Lionel’s Cafe rebrand" />
+          <figcaption>
+            <span class="project-number">04</span>
+            <span class="project-title">Proposed Lionel’s Cafe Rebrand</span>
+            <span class="project-meta">Identity / Branding / 2025</span>
+          </figcaption>
+        </figure>
+      </a>
+
+      <a
+        class="project project--six"
+        href="#project-modal"
+        data-project="project-six"
+        data-speed="-0.35"
+        aria-label="View Proposed Flow Festival Branding System project"
+      >
+        <figure>
+          <img src="images/flow_cover.jpg" alt="Flow Festival branding system" />
+          <figcaption>
+            <span class="project-number">05</span>
+            <span class="project-title">Proposed Festival Branding System: ‘Flow Festival’</span>
+            <span class="project-meta">Branding / Festival / 2025</span>
+          </figcaption>
+        </figure>
+      </a>
+    </section>
+
+    <section class="about" id="about">
+      <p class="section-label">About</p>
+
+      <div class="about-grid">
+        <div class="about-heading">
+          <h2>
+            The prospect of intertwining your ideas with my creative practice
+            excites me greatly.
+          </h2>
+        </div>
+
+        <figure class="about-portrait">
+          <img
+            src="images/oscar_headshot copy.png"
+            alt="Portrait of Oscar Sutton"
+            loading="lazy"
+          />
+          <figcaption>Oscar Sutton — Melbourne, Australia</figcaption>
+        </figure>
+
+        <div class="about-copy">
+          <p>
+            Available for freelance work in almost any creative capacity. Let’s
+            create something you will love.
+          </p>
+
+          <a class="text-link" href="mailto:oscarsutton05@gmail.com">
+            Get in touch ↗
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="current-year"></span> Oscar Sutton</p>
+
+    <div>
+      <a href="#">Instagram</a>
+      <a
+        href="https://www.linkedin.com/in/oscar-sutton-63b4ba30b/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >LinkedIn</a>
+    </div>
+  </footer>
+
+  <dialog class="project-modal" id="project-modal" aria-labelledby="modal-title">
+    <div class="modal-panel">
+      <header class="modal-header">
+        <p class="modal-count" id="modal-count">Project 01</p>
+
+        <button
+          class="modal-close"
+          type="button"
+          aria-label="Close project window"
+        >
+          Close ×
+        </button>
+      </header>
+
+      <div class="modal-content">
+        <div class="modal-introduction">
+          <p class="modal-meta" id="modal-meta"></p>
+          <h2 id="modal-title"></h2>
+          <p class="modal-description" id="modal-description"></p>
+        </div>
+
+        <div
+          class="modal-images"
+          id="modal-media"
+          aria-label="Project media"
+        ></div>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

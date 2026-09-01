@@ -297,7 +297,7 @@ const projectData = {
     ]
   },
 
-  "extra-credits": {
+  "the-canvas-road": {
     number: "Project 02",
     title: "The Canvas Road",
     meta: "Poster / Art Direction / 2026",
@@ -309,7 +309,7 @@ const projectData = {
     ]
   },
 
-  "amicas-room": {
+  "plage-type-specimen": {
     number: "Project 03",
     title: "Proposed ‘Plage’ Type Specimen",
     meta: "Whisky Label / 2025",
@@ -322,7 +322,7 @@ const projectData = {
     ]
   },
 
-  "m87": {
+  "lionels-cafe": {
     number: "Project 04",
     title: "Proposed Lionel’s Cafe Rebrand",
     meta: "Identity / Branding / 2025",
@@ -335,7 +335,7 @@ const projectData = {
     ]
   },
 
-  "project-six": {
+  "flow-festival": {
     number: "Project 05",
     title: "Proposed Festival Branding System: ‘Flow Festival’",
     meta: "Branding / Festival / 2025",

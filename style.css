@@ -408,14 +408,14 @@ p {
   aspect-ratio: 4 / 5;
 }
 
-.project--six {
+.project--five {
   top: 1650px;
   left: 38vw;
 
   width: clamp(220px, 27vw, 430px);
 }
 
-.project--six img {
+.project--five img {
   aspect-ratio: 3 / 4;
 }
 
@@ -485,6 +485,15 @@ p {
 
   border-bottom: 1px solid currentColor;
   padding-bottom: 4px;
+}
+
+
+.contact-email {
+  margin-top: 12px;
+  margin-bottom: 0;
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.03em;
 }
 
 
@@ -577,7 +586,7 @@ p {
     left: 4vw;
   }
 
-  .project--six {
+  .project--five {
     left: 32vw;
   }
 

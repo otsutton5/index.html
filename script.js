@@ -335,8 +335,22 @@ const projectData = {
     ]
   },
 
-  "flow-festival": {
+  "behind-the-label": {
     number: "Project 05",
+    title: "Behind The Label: Unmasking “Health Foods”",
+    meta: "Data representation / 2026",
+    descriptionHtml:
+      "This series of proposed packaging redesigns explores how contemporary food brands use the visual language of health to market processed products as nutritious, natural or beneficial. Clean typography, bright colours, scientific terminology, sporting imagery, natural ingredients and front-of-pack health icons are frequently used to establish trust before consumers examine the nutritional information. <em>Behind the Label</em> responds to these strategies by redesigning familiar “health” products to communicate a more direct and transparent account of what is being sold.",
+    media: [
+      { type: "image", src: "images/BTL/BTL1.jpg", layout: "half" },
+      { type: "image", src: "images/BTL/BTL4.jpg", layout: "half" },
+      { type: "image", src: "images/BTL/BTL2.png", layout: "half" },
+      { type: "image", src: "images/BTL/BTL3.jpg", layout: "half" }
+    ]
+  },
+
+  "flow-festival": {
+    number: "Project 06",
     title: "Proposed Festival Branding System: ‘Flow Festival’",
     meta: "Branding / Festival / 2025",
     description:
@@ -384,6 +398,7 @@ function openProjectModal(projectKey, trigger) {
   }));
 
   modalMedia.replaceChildren();
+  modalMedia.classList.toggle("modal-images--compact", projectKey === "behind-the-label");
 
   mediaItems.forEach((item, index) => {
     const figure = document.createElement("figure");
@@ -454,3 +469,4 @@ modal.addEventListener("close", () => {
     lastFocusedProject.focus();
   }
 });
+

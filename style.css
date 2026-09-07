@@ -221,7 +221,7 @@ p {
 
 .gallery {
   position: relative;
-  min-height: 2300px;
+  min-height: 2750px;
   overflow: hidden;
 
   border-bottom: 1px solid var(--line);
@@ -412,10 +412,21 @@ p {
   top: 1650px;
   left: 38vw;
 
-  width: clamp(220px, 27vw, 430px);
+  width: clamp(280px, 35vw, 560px);
 }
 
 .project--five img {
+  aspect-ratio: 3 / 2;
+}
+
+.project--six {
+  top: 2100px;
+  left: 14vw;
+
+  width: clamp(220px, 27vw, 430px);
+}
+
+.project--six img {
   aspect-ratio: 3 / 4;
 }
 
@@ -567,7 +578,7 @@ p {
   }
 
   .gallery {
-    min-height: 2000px;
+    min-height: 2550px;
   }
 
   .project--one {
@@ -853,6 +864,10 @@ body.modal-open {
   grid-column: span 2;
   margin: 0;
   min-width: 0;
+}
+
+.modal-images--compact {
+  gap: 10px;
 }
 
 .modal-images .modal-media--video {
